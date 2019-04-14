@@ -2,9 +2,14 @@ import React, { Component } from 'react';
 import dolphin_core from './dolphin_borderless.png'
 import styled from 'styled-components'
 
+
 const StyledDolphin = styled.div`
+    height: 1500px;
+`;
+
+const StyledDolphinCore = styled.div`
     width: 500px;
-    height: 1650px;
+    height: 400px;
     top: 10px;
     position: sticky;
     left: calc(50% - 250px);
@@ -12,7 +17,7 @@ const StyledDolphin = styled.div`
 
 const StyledDolphinLine = styled.div`
     width: 100%;
-    position: absolute;
+    position: fixed;
 `;
 
 const ImgStyle = {
@@ -46,11 +51,12 @@ class Dolphin extends Component {
         })
     };
 
-
     render() {
         return (
-            <StyledDolphin scroll={this.state.height}>
-                <img src={dolphin_core} alt={"dolphin"} style={ImgStyle}/>
+            <StyledDolphin>
+                <StyledDolphinCore scroll={this.state.height}>
+                    <img src={dolphin_core} alt={"dolphin"} style={ImgStyle}/>
+                </StyledDolphinCore>
                 <DolphinLine1/>
                 <DolphinLine2/>
             </StyledDolphin>
