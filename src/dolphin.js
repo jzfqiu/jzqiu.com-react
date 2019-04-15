@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import dolphin_core from './dolphin_borderless.png'
 import styled from 'styled-components'
 
@@ -17,19 +17,19 @@ const StyledDolphinCore = styled.div`
 `;
 
 const StyledDolphinLineA = styled.div`
-    top: 10%;
-    width: 520px;
+    top: 0px;
+    width: 800px;
     position: fixed;
-    margin-left: calc(50% - 170px);
-    z-index: 20;
+    margin-left: calc(50% - 400px);
+    z-index: ${props => props.zIdx};
 `;
 
 const StyledDolphinLineB = styled.div`
-    top: 10%;
-    width: 500px;
+    top: 0px;
+    width: 800px;
     position: fixed;
-    margin-left: calc(50% - 220px);
-    z-index: 0;
+    margin-left: calc(50% - 400px);
+    z-index: ${props => props.zIdx};
 `;
 
 const ImgStyle = {
@@ -38,13 +38,13 @@ const ImgStyle = {
 };
 
 
-const  moveLeftUp = function(endDim, n) {
-    return endDim - n*(endDim+50);
+const moveLeftUp = function (endDim, n) {
+    return endDim - n * (endDim + 50);
 };
 
 
-const  moveRightDown = function(viewBoxDim, endDim, n) {
-    return endDim - n * (endDim-viewBoxDim-50);
+const moveRightDown = function (viewBoxDim, endDim, n) {
+    return endDim - n * (endDim - viewBoxDim - 50);
 };
 
 
@@ -79,12 +79,9 @@ class Dolphin extends Component {
                 <StyledDolphinCore>
                     <img src={dolphin_core} alt={"dolphin"} style={ImgStyle}/>
                 </StyledDolphinCore>
-                <StyledDolphinLineA>
-                    <DolphinLineA x={this.state.height}/>
-                </StyledDolphinLineA>
-                <StyledDolphinLineB>
-                    <DolphinLineB x={this.state.height}/>
-                </StyledDolphinLineB>
+
+                <DolphinLineA x={this.state.height}/>
+                <DolphinLineB x={this.state.height}/>
             </StyledDolphin>
         );
     }
@@ -94,66 +91,83 @@ class Dolphin extends Component {
 class DolphinLineA extends Component {
 
     render() {
+
         const x = this.props.x;
         const widthDim = 300;
-        const heightDim = 400;
+        const heightDim = 300;
+        const widthOffset = 90;
+        const heightOffset = 55;
+        const scaleOffset = 0.65;
 
         return (
-            <svg xmlns="http://www.w3.org/2000/svg"
-                 viewBox={
-                     "0 0 " + widthDim +
-                     " " + heightDim
-                 }>
-                <defs>
-                    <style>{`
+            <div>
+                <StyledDolphinLineA zIdx={10}>
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         viewBox={
+                             "0 0 " + widthDim +
+                             " " + heightDim
+                         }>
+                        <defs>
+                            <style>{`
+                            .cls {
+                                fill: none;
+                                stroke: #000;
+                                stroke-miterlimit: 10;
+                                stroke-width: ${scaleOffset};
+                            }
+                        `}
+                            </style>
+                        </defs>
+                        <g>
+                            <polyline className="cls-1 l0" points=
+                                {
+                                    moveLeftUp(widthOffset + 100 * scaleOffset, x) + " " +
+                                    moveLeftUp(heightOffset, x) + " " +
+
+                                    moveLeftUp(widthOffset + 190 * scaleOffset, x) + " " +
+                                    moveRightDown(heightDim, heightOffset + 140 * scaleOffset, x) + " " +
+
+                                    moveRightDown(widthDim, widthOffset + 80 * scaleOffset, x) + " " +
+                                    moveRightDown(heightDim, heightOffset + 270 * scaleOffset, x)
+                                }
+                            />
+                        </g>
+                    </svg>
+                </StyledDolphinLineA>
+                <StyledDolphinLineA zIdx={0}>
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         viewBox={
+                             "0 0 " + widthDim +
+                             " " + heightDim
+                         }>
+                        <defs>
+                            <style>{`
                         .cls {
                             fill: none;
                             stroke: #000;
                             stroke-miterlimit: 10;
-                        }
-                        
-                        .l0 {
-                            z-index: 0;
-                        }
-                        
-                        .l1 {
-                            z-index: 20;
+                            stroke-width: ${scaleOffset};
                         }
                     `}
-                    </style>
-                </defs>
-                <title>Layer 1</title>
-                <g id="Layer1" data-name="Layer 1">
-                    <polyline className="cls-1 l0" points=
-                        {
-                            moveLeftUp(100, x) + " " +
-                            moveLeftUp(30, x) + " " +
+                            </style>
+                        </defs>
+                        <g>
+                            <polyline className="cls-1 l1" points=
+                                {
+                                    moveRightDown(widthDim, widthOffset + 80 * scaleOffset, x) + " " +
+                                    moveRightDown(heightDim, heightOffset + 270 * scaleOffset, x) + " " +
 
-                            moveLeftUp(190, x) + " " +
-                            moveRightDown(heightDim, 170, x) + " " +
+                                    moveRightDown(widthDim, widthOffset, x) + " " +
+                                    moveLeftUp(heightOffset + 110 * scaleOffset, x) + " " +
 
-                            moveRightDown(widthDim, 80, x) + " " +
-                            moveRightDown(heightDim, 300, x)
-                        }
-                    />
-                    <polyline className="cls-1 l1" points=
-                        {
-                            moveRightDown(widthDim, 80, x) + " " +
-                            moveRightDown(heightDim, 300, x) + " " +
-
-                            moveRightDown(widthDim, 0, x) + " " +
-                            moveLeftUp(140, x) + " " +
-
-                            moveLeftUp(100, x) + " " +
-                            moveLeftUp(30, x)
-                        }
-                    />
-                    {/*
-                    "100 0   190 140   80 270   0 110"
-
-                    */}
-                </g>
-            </svg>
+                                    moveLeftUp(widthOffset + 100 * scaleOffset, x) + " " +
+                                    moveLeftUp(heightOffset, x)
+                                }
+                            />
+                        </g>
+                    </svg>
+                </StyledDolphinLineA>
+            </div>
         );
     }
 }
@@ -164,48 +178,77 @@ class DolphinLineB extends Component {
     render() {
         const x = this.props.x;
         const widthDim = 300;
-        const heightDim = 400;
+        const heightDim = 300;
+        const widthOffset = 68;
+        const heightOffset = 80;
+        const scaleOffset = 0.65;
 
         return (
-            <svg xmlns="http://www.w3.org/2000/svg"
-                 viewBox={
-                     "0 0 " + widthDim +
-                     " " + heightDim
-                 }>
-                <defs>
-                    <style>
-                        {`.cls-1 {
+            <div>
+                <StyledDolphinLineB zIdx={10}>
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         viewBox={
+                             "0 0 " + widthDim +
+                             " " + heightDim
+                         }>
+                        <defs>
+                            <style>
+                                {`.cls-1 {
                         fill: none;
                         stroke:#000;
                         stroke-miterlimit:10;
+                        stroke-width: ${scaleOffset};
                     }`}
-                    </style>
-                </defs>
-                <title>Layer 2</title>
-                <g id="Layer_2" data-name="Layer 2">
-                    <polyline className="cls-1" points={
-                        moveRightDown(widthDim, 0, x) + " " +
-                        moveRightDown(heightDim, 80, x) + " " +
+                            </style>
+                        </defs>
+                        <g>
+                            <polyline className="cls-1" points={
 
-                        moveRightDown(widthDim, 190, x) + " " +
-                        moveLeftUp(150, x) + " " +
+                                moveLeftUp(widthOffset + 120 * scaleOffset, x) + " " +
+                                moveRightDown(heightDim, heightOffset + 180 * scaleOffset, x) + " " +
 
-                        moveLeftUp(260, x) + " " +
-                        moveLeftUp(280, x)
-                    }/>
-                    <polyline className="cls-1" points={
-                        moveLeftUp(260, x) + " " +
-                        moveLeftUp(280, x) + " " +
+                                moveRightDown(widthDim, widthOffset, x) + " " +
+                                moveRightDown(heightDim, heightOffset, x) + " " +
 
-                        moveLeftUp(120, x) + " " +
-                        moveRightDown(heightDim, 260, x) + " " +
+                                moveRightDown(widthDim, widthOffset + 190 * scaleOffset, x) + " " +
+                                moveLeftUp(heightOffset + 70 * scaleOffset, x)
+                            }/>
+                        </g>
+                    </svg>
+                </StyledDolphinLineB>
+                <StyledDolphinLineB zIdx={0}>
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         viewBox={
+                             "0 0 " + widthDim +
+                             " " + heightDim
+                         }>
+                        <defs>
+                            <style>
+                                {`.cls-1 {
+                        fill: none;
+                        stroke:#000;
+                        stroke-miterlimit:10;
+                        stroke-width: ${scaleOffset};
+                    }`}
+                            </style>
+                        </defs>
+                        <g id="Layer_2" data-name="Layer 2">
+                            <polyline className="cls-1" points={
+                                moveRightDown(widthDim, widthOffset + 190 * scaleOffset, x) + " " +
+                                moveLeftUp(heightOffset + 70 * scaleOffset, x) + " " +
 
-                        moveRightDown(widthDim, 0, x) + " " +
-                        moveRightDown(heightDim, 80, x)
-                    }/>
-                    {/*  "0 0   190 70   260 200   120 180"  */}
-                </g>
-            </svg>
+                                moveLeftUp(widthOffset + 260 * scaleOffset, x) + " " +
+                                moveLeftUp(heightOffset + 200 * scaleOffset, x) + " " +
+
+                                moveLeftUp(widthOffset + 120 * scaleOffset, x) + " " +
+                                moveRightDown(heightDim, heightOffset + 180 * scaleOffset, x)
+
+                            }/>
+                            {/*  "0 0   190 70   260 200   120 180"  */}
+                        </g>
+                    </svg>
+                </StyledDolphinLineB>
+            </div>
         );
     }
 }
