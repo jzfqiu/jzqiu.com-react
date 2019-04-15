@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const StyledHeya = styled.div`
     width: 800px;
-    height: 500px;
+    height: 300px;
     position: relative;
     left: calc(50% - 400px);
 `;
