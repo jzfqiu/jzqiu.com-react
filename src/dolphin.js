@@ -53,25 +53,10 @@ class Dolphin extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            height: 0,
             rendered: false
         };
     }
 
-    componentDidMount() {
-        window.addEventListener('scroll', this.listenToScroll)
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('scroll', this.listenToScroll)
-    }
-
-    listenToScroll = () => {
-        const toTop = document.documentElement.scrollTop / 1000;
-        this.setState({
-            height: toTop < 1 ? toTop : 1,
-        })
-    };
 
     render() {
         return (
@@ -79,9 +64,8 @@ class Dolphin extends Component {
                 <StyledDolphinCore>
                     <img src={dolphin_core} alt={"dolphin"} style={ImgStyle}/>
                 </StyledDolphinCore>
-
-                <DolphinLineA x={this.state.height}/>
-                <DolphinLineB x={this.state.height}/>
+                <DolphinLineA x={this.props.x}/>
+                <DolphinLineB x={this.props.x}/>
             </StyledDolphin>
         );
     }

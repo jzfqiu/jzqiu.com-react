@@ -12,11 +12,11 @@ class Heya extends Component {
     render() {
         return (
             <StyledHeya>
-                <h2>Borg.</h2>
-                <p>Not much has been lost, only a descent amount.</p>
-                <p>For the last time and God's holy grace, find someone to listen.</p>
-                <p>Be nice and good, look to the bright side of things.</p>
-                <p>Thank you and grip nice day.</p>
+                <h2>*Click*</h2>
+                <p>"What are you expecting?"</p>
+                <p>The fall of global capitalism and rise of Anarcho-technocracy.</p>
+                <p>"What... no, not that. This."</p>
+                <p>Oh, idgaf.</p>
             </StyledHeya>
         );
     }
