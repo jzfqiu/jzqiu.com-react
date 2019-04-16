@@ -3,32 +3,14 @@ import styled from 'styled-components'
 
 
 
-const StylDivider = styled.div`
-    width: 800px;
-    height: 400px;
-    position: relative
-    left: calc(50% - 400px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`;
-
-const StylDividerTitle = styled.h2`
-    width: 150px;
-    text-align: center;
-    font-weight: 500;
-`;
-
-
 const StylProject = styled.div`
     width: 1000px;
-    height: 600px;
+    height: 500px;
     position: relative
     left: calc(50% - 500px);
     display: flex;
     align-items: center;
     justify-content: center;
-
 `;
 
 const StylProjSVG = styled.div`    
@@ -40,24 +22,6 @@ const StylProjText = styled.div`
     padding: 50px;
 `;
 
-
-class ProjectDivider extends Component {
-    render() {
-        return (
-            <StylDivider>
-                <svg height={30} width={200}>
-                    <style>{`.cls{stroke:#000000;stroke-width:2}`}</style>
-                    <line className="cls" x1={200-this.props.x*200} y1="13" x2="200" y2="13"/>
-                </svg>
-                <StylDividerTitle>Projects</StylDividerTitle>
-                <svg height={30} width={200}>
-                    <style>{`.cls{stroke:#000000;stroke-width:2}`}</style>
-                    <line className="cls" x1="0" y1="13" x2={this.props.x*200} y2="13"/>
-                </svg>
-            </StylDivider>
-        )
-    }
-}
 
 
 class ProjectSecrets extends Component {
@@ -118,7 +82,7 @@ c2,0,3.7,1.8,3.7,4v12.5C189.2,381,187.6,382.8,185.6,382.8z"/>
                     </svg>
                 </StylProjSVG>
                 <StylProjText>
-                    <h4><a href="https://github.com/jeff-zqiu/uocsecrets">UoCSecrets</a></h4>
+                    <h4>UoCSecrets</h4>
                     <p>An anonymous social network webapp</p>
                     <p>Built using: Django, Bootstrap, PostgreSQL</p>
                 </StylProjText>
@@ -129,8 +93,6 @@ c2,0,3.7,1.8,3.7,4v12.5C189.2,381,187.6,382.8,185.6,382.8z"/>
 
 
 class ProjectIMEDB extends Component {
-
-
 
     render() {
         const x1 = this.props.x < 0.5 ? this.props.x * 2 : 1;
@@ -156,17 +118,12 @@ class ProjectIMEDB extends Component {
                         <line className="st1" x1="0" y1="400" x2="800" y2="400"/>
 
                         <rect x={150} y={175-x1*15} className="st1" width={500+x1*100} height={50+x1*130}/>
-                        {/*<rect x="150" y="160" className="st1" width="600" height="180"/>*/}
-
                         <rect x={350-x1*165} y={275-x1*90} className="st1" width={100+x1*30} height={50+x1*80}/>
-                        {/*<rect x="185" y="185" className="st1" width="130" height="130"/>*/}
 
                         <line className="st1" x1="345" y1="200" x2={345+x2*350} y2="200"/>
                         <line className="st1" x1="345" y1="250" x2={345+x2*350} y2="250"/>
                         <line className="st1" x1="345" y1="300" x2={345+x2*200} y2="300"/>
 
-
-                        {/*   <rect x="250" y="250" className="st1" width="130" height="130"/>  */}
                         <polyline className="st0" points="0,130.7 108.5,130.7 174.5,68.6 800,68.6 "/>
                         <polygon className="st1"
                                  points="60.1,19.8 47.2,43.4 60.1,66.6 85.4,66.6 98.2,43.2 85.6,19.8 "/>
@@ -181,10 +138,30 @@ class ProjectIMEDB extends Component {
     }
 }
 
+
+class ProjectJzqiu extends Component {
+    render() {
+        return (
+            <StylProject>
+                <StylProjSVG>
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         viewBox="-5 -5 810 410">
+                    </svg>
+                </StylProjSVG>
+                <StylProjText>
+                    <h4>This Site</h4>
+                    <p>My personal website</p>
+                    <p>Built using: React, Flask, SQLite</p>
+                </StylProjText>
+            </StylProject>
+        )
+    }
+}
+
 export {
-    ProjectDivider,
     ProjectSecrets,
     ProjectIMEDB,
+    ProjectJzqiu,
 };
 // eslint-disable-next-line
 {/*
