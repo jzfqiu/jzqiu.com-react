@@ -1,9 +1,13 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
+import styled from 'styled-components'
+
 import Heya from './heya.js';
 import Dolphin from './dolphin.js';
 import { ProjectSecrets, ProjectIMEDB, ProjectJzqiu } from './projects.js';
-import styled from 'styled-components'
+// import Words from './words.js';
+import Techs from './tech.js';
+
 
 
 const StyledIndex = styled.div`
@@ -26,7 +30,7 @@ const StylDivider = styled.div`
 `;
 
 const StylDividerTitle = styled.h2`
-    width: 150px;
+    width: 170px;
     text-align: center;
     font-weight: 500;
 `;
@@ -89,20 +93,24 @@ class Index extends React.Component {
 
     render () {
         const DolphinX = this.calcIntervalX(0, 1000);
-        const ProjDividerX = this.calcIntervalX(1200, 1500);
+        const ProjDividerX = 1; //this.calcIntervalX(1200, 1500);
         const ProjSecretsX = this.calcIntervalX(1800, 2100);
         const ProjImedbX = this.calcIntervalX(2400, 2700);
         const ProjJzqiuX = this.calcIntervalX(2900, 3200);
-        const WordDividerX = this.calcIntervalX(3400, 3700);
+        // const WordDividerX = this.calcIntervalX(3400, 3700);
+        const TechDividerX = 1; //this.calcIntervalX(3400, 3700);
         return (
             <StyledIndex>
                 <Dolphin x={DolphinX}/>
                 <Heya />
-                <Divider title={"Project"} x={ProjDividerX}/>
+                <Divider title={"Projects"} x={ProjDividerX}/>
                 <ProjectSecrets x={ProjSecretsX}/>
                 <ProjectIMEDB x={ProjImedbX}/>
                 <ProjectJzqiu x={ProjJzqiuX}/>
-                <Divider title={"Words"} x={WordDividerX}/>
+                {/*<Divider title={"Words"} x={WordDividerX}/>*/}
+                {/*<Words />*/}
+                <Divider title={"Tech Stack"} x={TechDividerX}/>
+                <Techs />
                 <StylBotFiller/>
             </StyledIndex>
         )

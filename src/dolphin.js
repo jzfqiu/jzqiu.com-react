@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import dolphin_core from './dolphin_borderless.png'
+import dolphin_core from './assets/dolphin_borderless.png'
 import styled from 'styled-components'
 
 
