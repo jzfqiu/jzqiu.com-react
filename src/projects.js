@@ -23,6 +23,15 @@ const StylProjText = styled.div`
     padding: 50px;
 `;
 
+const StyleProjLink = styled.a`
+    color: #000000;
+    text-decoration: none;
+    &:hover {
+        color: #444444
+        text-decoration: underline;
+    }
+`;
+
 
 
 
@@ -45,7 +54,6 @@ class ProjectComponent extends Component {
     // mouse in before leaving finishes: clearInterval(leave), setInterval(enter), playing: enter -> leave
 
     playEnterFrame() {
-        console.log("triggered enter");
         if (this.state.playing === "leave" && this.state.frame !== 0) {
             clearInterval(this.state.intervalID);
         }
@@ -74,7 +82,6 @@ class ProjectComponent extends Component {
     }
 
     playLeaveFrame() {
-        console.log("triggered leave");
         if (this.state.playing === "enter" && this.state.frame !== 0) {
             clearInterval(this.state.intervalID);
         }
@@ -165,9 +172,15 @@ c2,0,3.7,1.8,3.7,4v12.5C189.2,381,187.6,382.8,185.6,382.8z"/>
                     </svg>
                 </StylProjSVG>
                 <StylProjText>
-                    <h4>UoCSecrets</h4>
-                    <p>An anonymous social network webapp</p>
-                    <p>Built using: Django, Bootstrap, PostgreSQL</p>
+                    <StyleProjLink href={"https://github.com/jeff-zqiu/uocsecrets"}>
+                        <h4>UoCSecrets</h4>
+                    </StyleProjLink>
+                    <p>
+                        Anonymous social network webapp. Posts are organized into card-style design.
+                        User can upvote posts or view post in popularity or time order. Support
+                        image upload and nested comments. Currently offline.
+                    </p>
+                    <p>Tech: Django, Bootstrap, PostgreSQL</p>
                 </StylProjText>
             </StylProject>
         )
@@ -185,9 +198,15 @@ class ProjectIMEDB extends ProjectComponent {
                          onMouseLeave={() => {this.playLeaveFrame()}}
             >
                 <StylProjText>
-                    <h4>IME Inventory Database</h4>
-                    <p>A search engine and database interface for IME's equipment inventory</p>
-                    <p>Built using: Flask, jQuery, MongoDB</p>
+                    <StyleProjLink href={"https://github.com/jeff-zqiu/IME-Inventory-Database"}>
+                        <h4>IME Inventory Database</h4>
+                    </StyleProjLink>
+                    <p>
+                        A search engine and database interface for IME's equipment inventory.
+                        Uses metatags and text index to build intelligent search query. Interface for editing
+                        also included. Currently under development.
+                    </p>
+                    <p>Tech: Flask, jQuery, MongoDB</p>
                 </StylProjText>
                 <StylProjSVG>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 810 410">
@@ -287,9 +306,12 @@ class ProjectJzqiu extends ProjectComponent {
                     </svg>
                 </StylProjSVG>
                 <StylProjText>
-                    <h4>This Site</h4>
-                    <p>My personal website</p>
-                    <p>Built using: React, Flask, SQLite</p>
+                    <h4>jzqiu.com</h4>
+                    <p>
+                        My personal website. Built with vector graphs, svg animation and excessive
+                        obsession with dolphin.
+                    </p>
+                    <p>Tech: React</p>
                 </StylProjText>
             </StylProject>
         )
