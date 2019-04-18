@@ -91,6 +91,7 @@ class Index extends React.Component {
         }
     }
 
+
     render () {
         const DolphinX = this.calcIntervalX(0, 1000);
         const ProjDividerX = 1; //this.calcIntervalX(1200, 1500);
@@ -101,12 +102,12 @@ class Index extends React.Component {
         const TechDividerX = 1; //this.calcIntervalX(3400, 3700);
         return (
             <StyledIndex>
-                <Dolphin x={DolphinX}/>
+                {/*<Dolphin x={DolphinX}/>*/}
                 <Heya />
                 <Divider title={"Projects"} x={ProjDividerX}/>
-                <ProjectSecrets x={ProjSecretsX}/>
-                <ProjectIMEDB x={ProjImedbX}/>
-                <ProjectJzqiu x={ProjJzqiuX}/>
+                <ProjectSecrets fps={50} duration={0.5}/>
+                <ProjectIMEDB fps={50} duration={0.6}/>
+                <ProjectJzqiu fps={50} duration={0.5}/>
                 {/*<Divider title={"Words"} x={WordDividerX}/>*/}
                 {/*<Words />*/}
                 <Divider title={"Tech Stack"} x={TechDividerX}/>

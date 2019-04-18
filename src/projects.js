@@ -22,10 +22,93 @@ const StylProjText = styled.div`
 `;
 
 
-class ProjectSecrets extends Component {
+
+
+class ProjectComponent extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            frame: 0,
+            playing: "none",
+            intervalID: null,
+        };
+    }
+
+    nFrame = 1 / (this.props.fps * this.props.duration);
+
+    // mouse in 1st time / after leaving finishes: setInterval(enter), playing: none -> enter,
+    // mouse out before entering finishes: clearInterval(enter), setInterval(leave), playing: enter -> leave
+    // mouse in, entering finishes: clearInterval(enter), playing: enter -> none
+    // mouse out after entering finishes: setInterval(leave), playing: none -> leave,
+    // mouse in before leaving finishes: clearInterval(leave), setInterval(enter), playing: enter -> leave
+
+    playEnterFrame() {
+        if (this.state.playing === "leave") {
+            clearInterval(this.state.intervalID);
+        }
+        if (this.state.playing !== "enter" && this.state.frame < 1) {
+            // set up interval call
+            const enterID = setInterval(() => {
+                if (this.state.frame >= 0.99) {
+                    this.setState({
+                        frame: 1,
+                        playing: "none",
+                        intervalID: null
+                    });
+                    window.clearInterval(enterID);
+                } else {
+                    console.log(this.state.frame);
+                    this.setState({
+                        frame: this.state.frame + this.nFrame
+                    });
+                }
+            }, 1000 / this.props.fps);
+            //register in state
+            this.setState({
+                playing: "enter",
+                intervalID: enterID,
+            });
+        }
+    }
+
+    playLeaveFrame() {
+        if (this.state.playing === "enter") {
+            clearInterval(this.state.intervalID);
+        }
+        if (this.state.playing !== "leave" && this.state.frame > 0) {
+            // set up interval call
+            const leaveID = setInterval(() => {
+                if (this.state.frame < 0.01) {
+                    this.setState({
+                        frame: 0,
+                        playing: "none",
+                        intervalID: null
+                    });
+                    window.clearInterval(leaveID);
+                } else {
+                    console.log(this.state.frame);
+                    this.setState({
+                        frame: this.state.frame - this.nFrame
+                    });
+                }
+            }, 1000 / this.props.fps);
+            //register in state
+            this.setState({
+                playing: "leave",
+                intervalID: leaveID,
+            });
+        }
+    }
+}
+
+
+class ProjectSecrets extends ProjectComponent {
     render() {
+        const x = this.state.frame;
         return (
-            <StylProject>
+            <StylProject onMouseEnter={() => {this.playEnterFrame()}}
+                         onMouseLeave={() => {this.playLeaveFrame()}}
+            >
                 <StylProjSVG>
                     <svg xmlns="http://www.w3.org/2000/svg"
                          viewBox="-5 -5 810 410">
@@ -68,15 +151,15 @@ c2,0,3.7,1.8,3.7,4v12.5C751.2,381,749.6,382.8,747.6,382.8z"/>
                             <path className="st0" d="M185.6,382.8h-4.5l-12,4.4c-0.5,0.2-1-0.2-1.1-0.8l-0.1-3.6c-2,0-3.7-1.8-3.7-4v-12.5c0-2.2,1.6-4,3.7-4h17.7
 c2,0,3.7,1.8,3.7,4v12.5C189.2,381,187.6,382.8,185.6,382.8z"/>
                         </g>
-                        <line className="st0" x1="590" y1="190" x2={this.props.x * 180 + 590} y2="190"/>
-                        <line className="st0" x1="770" y1={330 - this.props.x * 140} x2="770" y2="330"/>
-                        <line className="st0" x1={770 - this.props.x * 180} y1="330" x2="770" y2="330"/>
-                        <line className="st0" x1="590" y1="190" x2="590" y2={this.props.x * 140 + 190}/>
-                        <line className="st0" x1="310" y1="100" x2={this.props.x * 180 + 310} y2="100"/>
-                        <line className="st0" x1="310" y1="160" x2={this.props.x * 180 + 310} y2="160"/>
-                        <line className="st0" x1="310" y1="220" x2={this.props.x * 180 + 310} y2="220"/>
-                        <line className="st0" x1="310" y1="280" x2={this.props.x * 140 + 310} y2="280"/>
-                        <line className="st0" x1="30" y1="300" x2={this.props.x * 180 + 30} y2="300"/>
+                        <line className="st0" x1="590" y1="190" x2={x * 180 + 590} y2="190"/>
+                        <line className="st0" x1="770" y1={330 - x * 140} x2="770" y2="330"/>
+                        <line className="st0" x1={770 - x * 180} y1="330" x2="770" y2="330"/>
+                        <line className="st0" x1="590" y1="190" x2="590" y2={x * 140 + 190}/>
+                        <line className="st0" x1="310" y1="100" x2={x * 180 + 310} y2="100"/>
+                        <line className="st0" x1="310" y1="160" x2={x * 180 + 310} y2="160"/>
+                        <line className="st0" x1="310" y1="220" x2={x * 180 + 310} y2="220"/>
+                        <line className="st0" x1="310" y1="280" x2={x * 140 + 310} y2="280"/>
+                        <line className="st0" x1="30" y1="300" x2={x * 180 + 30} y2="300"/>
                     </svg>
                 </StylProjSVG>
                 <StylProjText>
@@ -90,13 +173,15 @@ c2,0,3.7,1.8,3.7,4v12.5C189.2,381,187.6,382.8,185.6,382.8z"/>
 }
 
 
-class ProjectIMEDB extends Component {
+class ProjectIMEDB extends ProjectComponent {
 
     render() {
-        const x1 = this.props.x < 0.5 ? this.props.x * 2 : 1;
-        const x2 = this.props.x < 0.5 ? 0 : this.props.x * 2 - 1;
+        const x1 = this.state.frame < 0.5 ? this.state.frame * 2 : 1;
+        const x2 = this.state.frame < 0.5 ? 0 : this.state.frame * 2 - 1;
         return (
-            <StylProject>
+            <StylProject onMouseEnter={() => {this.playEnterFrame()}}
+                         onMouseLeave={() => {this.playLeaveFrame()}}
+            >
                 <StylProjText>
                     <h4>IME Inventory Database</h4>
                     <p>A search engine and database interface for IME's equipment inventory</p>
@@ -138,11 +223,12 @@ class ProjectIMEDB extends Component {
 }
 
 
-class ProjectJzqiu extends Component {
+class ProjectJzqiu extends ProjectComponent {
     render() {
-        const x = this.props.x;
+        const x = this.state.frame;
         return (
-            <StylProject>
+            <StylProject onMouseEnter={() => {this.playEnterFrame()}}
+                         onMouseLeave={() => {this.playLeaveFrame()}}>
                 <StylProjSVG>
                     <svg xmlns="http://www.w3.org/2000/svg"
                          viewBox="-5 -5 810 410">
@@ -153,7 +239,7 @@ class ProjectJzqiu extends Component {
                         `}
                         </style>
                         <g>
-                            <path transform={'rotate('+ x*180+' 422.5 219.5)'} className="st1" d="M491.2,201.1c-0.5-2-1.2-4-1.9-5.9l8.2-7.9c-2.6-6.1-5.8-11.7-9.7-16.8l-11,3.1c-2.7-3.2-5.6-6.1-8.7-8.7
+                            <path transform={'rotate('+ x*60+' 422.5 219.5)'} className="st1" d="M491.2,201.1c-0.5-2-1.2-4-1.9-5.9l8.2-7.9c-2.6-6.1-5.8-11.7-9.7-16.8l-11,3.1c-2.7-3.2-5.6-6.1-8.7-8.7
 				l3.2-11c-5.2-3.9-10.8-7.2-16.8-9.7l-8,8.2c-3.9-1.4-7.8-2.5-11.9-3.2L432,138c-6.3-0.8-12.9-0.8-19.4,0l-2.8,11.1
 				c-2,0.4-4,0.8-6,1.3c-2,0.5-4,1.2-5.9,1.9l-7.9-8.2c-6.1,2.6-11.7,5.8-16.8,9.7l3.1,11c-3.2,2.7-6.1,5.6-8.7,8.7l-11-3.2
 				c-3.9,5.2-7.2,10.8-9.7,16.8l8.2,8c-1.4,3.9-2.5,7.8-3.2,11.9l-11.1,2.8c-0.8,6.3-0.8,12.8,0,19.4l11.1,2.8c0.4,2,0.8,4,1.3,6
@@ -162,7 +248,7 @@ class ProjectJzqiu extends Component {
 				c6.1-2.6,11.7-5.8,16.8-9.7l-3.1-11c3.2-2.7,6.1-5.6,8.7-8.7l11,3.2c3.9-5.2,7.2-10.8,9.7-16.8l-8.2-8c1.4-3.8,2.5-7.8,3.2-11.9
 				l11.1-2.8c0.8-6.3,0.8-12.8,0-19.4l-11.1-2.8C492.2,205.1,491.7,203.1,491.2,201.1z M437,275.2c-30.8,8.2-62.4-10.1-70.6-40.9
 				c-8.2-30.8,10.1-62.4,40.9-70.6c30.8-8.2,62.4,10.1,70.6,40.9C486.1,235.4,467.7,267,437,275.2z"/>
-                            <path transform={'rotate(-'+ x*180+' 283.5 256.5)'} className="st1" d="M331.1,244.1c-0.4-1.4-0.8-2.7-1.3-4l5.7-5.4c-1.8-4.2-4-8-6.6-11.5l-7.5,2.1c-1.8-2.2-3.8-4.2-6-6l2.2-7.5
+                            <path transform={'rotate(-'+ x*60+' 283.5 256.5)'} className="st1" d="M331.1,244.1c-0.4-1.4-0.8-2.7-1.3-4l5.7-5.4c-1.8-4.2-4-8-6.6-11.5l-7.5,2.1c-1.8-2.2-3.8-4.2-6-6l2.2-7.5
 				c-3.6-2.7-7.4-4.9-11.5-6.7l-5.5,5.6c-2.6-1-5.4-1.7-8.2-2.2l-1.9-7.6c-4.4-0.5-8.8-0.6-13.3,0l-1.9,7.6
 				c-1.4,0.2-2.8,0.5-4.1,0.9c-1.4,0.4-2.7,0.8-4,1.3l-5.4-5.7c-4.2,1.8-8,4-11.5,6.6l2.1,7.5c-2.2,1.8-4.2,3.8-6,6l-7.5-2.2
 				c-2.7,3.6-4.9,7.4-6.7,11.5l5.6,5.5c-1,2.6-1.7,5.4-2.2,8.2l-7.6,1.9c-0.5,4.4-0.6,8.8,0,13.3l7.6,1.9c0.2,1.4,0.5,2.8,0.9,4.1
@@ -213,33 +299,3 @@ export {
     ProjectIMEDB,
     ProjectJzqiu,
 };
-// eslint-disable-next-line
-{/*
-<section classNameName="projects">
-    <h3>Projects</h3>
-    <div classNameName="uocsecrets">
-        <h4>UoCSecrets</h4>
-        <p>An anonymous social network webapp</p>
-        <p>Built using: Django, Bootstrap, PostgreSQL</p>
-    </div>
-    <div classNameName="ime_inventory_database">
-        <h4>IME Inventory Database</h4>
-        <p>A search engine and database interface for IME's equipment inventory</p>
-        <p>Built using: Flask, jQuery, MongoDB</p>
-    </div>
-    <div classNameName="jzqiu">
-        <h4>This Site</h4>
-        <p>My personal website</p>
-        <p>Built using: Flask, jQuery, SQLite</p>
-    </div>
-</section>
-
-
-
-
-
-
-
-*/
-}
-
