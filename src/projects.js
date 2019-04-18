@@ -4,7 +4,9 @@ import styled from 'styled-components'
 
 const StylProject = styled.div`
     width: 1000px;
-    height: 500px;
+    height: 300px;
+    margin-top: 50px;
+    margin-bottom: 50px;
     position: relative
     left: calc(50% - 500px);
     display: flex;
@@ -43,7 +45,8 @@ class ProjectComponent extends Component {
     // mouse in before leaving finishes: clearInterval(leave), setInterval(enter), playing: enter -> leave
 
     playEnterFrame() {
-        if (this.state.playing === "leave") {
+        console.log("triggered enter");
+        if (this.state.playing === "leave" && this.state.frame !== 0) {
             clearInterval(this.state.intervalID);
         }
         if (this.state.playing !== "enter" && this.state.frame < 1) {
@@ -57,7 +60,6 @@ class ProjectComponent extends Component {
                     });
                     window.clearInterval(enterID);
                 } else {
-                    console.log(this.state.frame);
                     this.setState({
                         frame: this.state.frame + this.nFrame
                     });
@@ -72,13 +74,14 @@ class ProjectComponent extends Component {
     }
 
     playLeaveFrame() {
-        if (this.state.playing === "enter") {
+        console.log("triggered leave");
+        if (this.state.playing === "enter" && this.state.frame !== 0) {
             clearInterval(this.state.intervalID);
         }
         if (this.state.playing !== "leave" && this.state.frame > 0) {
             // set up interval call
             const leaveID = setInterval(() => {
-                if (this.state.frame < 0.01) {
+                if (this.state.frame < 0.03) {
                     this.setState({
                         frame: 0,
                         playing: "none",
@@ -86,7 +89,6 @@ class ProjectComponent extends Component {
                     });
                     window.clearInterval(leaveID);
                 } else {
-                    console.log(this.state.frame);
                     this.setState({
                         frame: this.state.frame - this.nFrame
                     });
@@ -248,7 +250,7 @@ class ProjectJzqiu extends ProjectComponent {
 				c6.1-2.6,11.7-5.8,16.8-9.7l-3.1-11c3.2-2.7,6.1-5.6,8.7-8.7l11,3.2c3.9-5.2,7.2-10.8,9.7-16.8l-8.2-8c1.4-3.8,2.5-7.8,3.2-11.9
 				l11.1-2.8c0.8-6.3,0.8-12.8,0-19.4l-11.1-2.8C492.2,205.1,491.7,203.1,491.2,201.1z M437,275.2c-30.8,8.2-62.4-10.1-70.6-40.9
 				c-8.2-30.8,10.1-62.4,40.9-70.6c30.8-8.2,62.4,10.1,70.6,40.9C486.1,235.4,467.7,267,437,275.2z"/>
-                            <path transform={'rotate(-'+ x*60+' 283.5 256.5)'} className="st1" d="M331.1,244.1c-0.4-1.4-0.8-2.7-1.3-4l5.7-5.4c-1.8-4.2-4-8-6.6-11.5l-7.5,2.1c-1.8-2.2-3.8-4.2-6-6l2.2-7.5
+                            <path transform={'rotate('+ -x*60+' 283.5 256.5)'} className="st1" d="M331.1,244.1c-0.4-1.4-0.8-2.7-1.3-4l5.7-5.4c-1.8-4.2-4-8-6.6-11.5l-7.5,2.1c-1.8-2.2-3.8-4.2-6-6l2.2-7.5
 				c-3.6-2.7-7.4-4.9-11.5-6.7l-5.5,5.6c-2.6-1-5.4-1.7-8.2-2.2l-1.9-7.6c-4.4-0.5-8.8-0.6-13.3,0l-1.9,7.6
 				c-1.4,0.2-2.8,0.5-4.1,0.9c-1.4,0.4-2.7,0.8-4,1.3l-5.4-5.7c-4.2,1.8-8,4-11.5,6.6l2.1,7.5c-2.2,1.8-4.2,3.8-6,6l-7.5-2.2
 				c-2.7,3.6-4.9,7.4-6.7,11.5l5.6,5.5c-1,2.6-1.7,5.4-2.2,8.2l-7.6,1.9c-0.5,4.4-0.6,8.8,0,13.3l7.6,1.9c0.2,1.4,0.5,2.8,0.9,4.1

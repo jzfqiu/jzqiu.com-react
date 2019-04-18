@@ -16,18 +16,10 @@ const StyledDolphinCore = styled.div`
     z-index: 10;
 `;
 
-const StyledDolphinLineA = styled.div`
+const StyledDolphinLine = styled.div`
     top: 0px;
     width: 800px;
-    position: fixed;
-    margin-left: calc(50% - 400px);
-    z-index: ${props => props.zIdx};
-`;
-
-const StyledDolphinLineB = styled.div`
-    top: 0px;
-    width: 800px;
-    position: fixed;
+    position: ${props => props.played ? "sticky" : "fixed"};
     margin-left: calc(50% - 400px);
     z-index: ${props => props.zIdx};
 `;
@@ -75,7 +67,6 @@ class Dolphin extends Component {
 class DolphinLineA extends Component {
 
     render() {
-
         const x = this.props.x;
         const widthDim = 300;
         const heightDim = 300;
@@ -85,7 +76,7 @@ class DolphinLineA extends Component {
 
         return (
             <div>
-                <StyledDolphinLineA zIdx={10}>
+                <StyledDolphinLine zIdx={x===1 ? -10 : 10}>
                     <svg xmlns="http://www.w3.org/2000/svg"
                          viewBox={
                              "0 0 " + widthDim +
@@ -117,8 +108,8 @@ class DolphinLineA extends Component {
                             />
                         </g>
                     </svg>
-                </StyledDolphinLineA>
-                <StyledDolphinLineA zIdx={0}>
+                </StyledDolphinLine>
+                <StyledDolphinLine zIdx={x===1 ? -10 : 0}>
                     <svg xmlns="http://www.w3.org/2000/svg"
                          viewBox={
                              "0 0 " + widthDim +
@@ -150,7 +141,7 @@ class DolphinLineA extends Component {
                             />
                         </g>
                     </svg>
-                </StyledDolphinLineA>
+                </StyledDolphinLine>
             </div>
         );
     }
@@ -169,7 +160,7 @@ class DolphinLineB extends Component {
 
         return (
             <div>
-                <StyledDolphinLineB zIdx={10}>
+                <StyledDolphinLine zIdx={x===1 ? -10 : 10}>
                     <svg xmlns="http://www.w3.org/2000/svg"
                          viewBox={
                              "0 0 " + widthDim +
@@ -199,8 +190,8 @@ class DolphinLineB extends Component {
                             }/>
                         </g>
                     </svg>
-                </StyledDolphinLineB>
-                <StyledDolphinLineB zIdx={0}>
+                </StyledDolphinLine>
+                <StyledDolphinLine zIdx={x===1 ? -10 : 0}>
                     <svg xmlns="http://www.w3.org/2000/svg"
                          viewBox={
                              "0 0 " + widthDim +
@@ -231,7 +222,7 @@ class DolphinLineB extends Component {
                             {/*  "0 0   190 70   260 200   120 180"  */}
                         </g>
                     </svg>
-                </StyledDolphinLineB>
+                </StyledDolphinLine>
             </div>
         );
     }
