@@ -105,7 +105,7 @@ class Footer extends React.Component {
                     </a>
                 </StylButtonImgContainer>
                 <StylButtonImgContainer>
-                    <a href="https://drive.google.com/file/d/1SHt_-9mO38SE2G_diqTV5GmXA8xPEj44/view?usp=sharing">
+                    <a href="https://github.com/jeff-zqiu/CV/raw/master/Jeff_Qiu_Technical_CV.pdf">
                         <StylButtonImg src={cv_button} alt={"CV button"}/>
                     </a>
                 </StylButtonImgContainer>
