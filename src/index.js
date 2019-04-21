@@ -121,18 +121,25 @@ class Index extends React.Component {
         super(props);
         this.state = {
             h: 0,
+            width: window.innerWidth
         };
     }
 
     componentDidMount() {
-        window.addEventListener('scroll', this.listenToScroll)
+        window.addEventListener('scroll', this.handleWindowScroll);
+        window.addEventListener('resize', this.handleWindowSizeChange);
     }
 
     componentWillUnmount() {
-        window.removeEventListener('scroll', this.listenToScroll)
+        window.removeEventListener('scroll', this.handleWindowScroll);
+        window.removeEventListener('resize', this.handleWindowSizeChange);
     }
 
-    listenToScroll = () => {
+    handleWindowSizeChange = () => {
+        this.setState({ width: window.innerWidth });
+    };
+
+    handleWindowScroll = () => {
         const toTop = document.documentElement.scrollTop;
         this.setState({
             h: toTop,
@@ -153,25 +160,37 @@ class Index extends React.Component {
 
 
     render () {
+        const isMobile = this.state.width <= 1000;
+
         const DolphinX = this.calcIntervalX(0, 1000);
         const ProjDividerX = this.calcIntervalX(1200, 1500);
-        // const WordDividerX = this.calcIntervalX(3400, 3700);
-        const TechDividerX = this.calcIntervalX(2600, 2900);
-        return (
-            <StyledIndex>
-                <Dolphin x={DolphinX}/>
-                <Heya />
-                <Divider title={"Projects"} x={ProjDividerX}/>
-                <ProjectSecrets fps={50} duration={0.4}/>
-                <ProjectIMEDB fps={50} duration={0.6}/>
-                <ProjectJzqiu fps={50} duration={0.4}/>
-                {/*<Divider title={"Words"} x={WordDividerX}/>*/}
-                {/*<Words />*/}
-                <Divider title={"Tech Stack"} x={TechDividerX}/>
-                <Techs />
-                <Footer/>
-            </StyledIndex>
-        )
+        const TechDividerX = this.calcIntervalX(2500, 3000);
+
+        if (isMobile) {
+            return (
+                <div>
+                    <h2>Uh oh...</h2>
+                    <p>Mobile version is currently under development.</p>
+                    <p>View on a computer or come back later.</p>
+                </div>
+            )
+        } else {
+            return (
+                <StyledIndex>
+                    <Dolphin x={DolphinX}/>
+                    <Heya />
+                    <Divider title={"Projects"} x={ProjDividerX}/>
+                    <ProjectSecrets fps={50} duration={0.4}/>
+                    <ProjectIMEDB fps={50} duration={0.6}/>
+                    <ProjectJzqiu fps={50} duration={0.4}/>
+                    {/*<Divider title={"Words"} x={WordDividerX}/>*/}
+                    {/*<Words />*/}
+                    <Divider title={"Tech Stack"} x={TechDividerX}/>
+                    <Techs />
+                    <Footer/>
+                </StyledIndex>
+            )
+        }
     }
 }
 
