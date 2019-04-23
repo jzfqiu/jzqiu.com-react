@@ -140,7 +140,7 @@ class Index extends React.Component {
     };
 
     handleWindowScroll = () => {
-        const toTop = document.documentElement.scrollTop;
+        const toTop = window.scrollY;
         this.setState({
             h: toTop,
         })
