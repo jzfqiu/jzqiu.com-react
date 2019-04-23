@@ -1,25 +1,25 @@
-import React, {Component} from 'react';
+    import React, {Component} from 'react';
 import dolphin_core from './assets/dolphin_borderless.png'
 import styled from 'styled-components'
 
 
 const StyledDolphin = styled.div`
     height: 1500px;
+    width: 100%;
 `;
 
 const StyledDolphinCore = styled.div`
     width: 500px;
-    height: 400px;
-    top: calc(10% + 10px);
-    position: sticky;
-    left: calc(50% - 250px);
+    top: ${props => props.xl}px;
+    position: fixed;
+    margin-left: calc(50% - 250px);
     z-index: 10;
 `;
 
 const StyledDolphinLine = styled.div`
     top: 0px;
     width: 800px;
-    position: ${props => props.played ? "sticky" : "fixed"};
+    position: fixed;
     margin-left: calc(50% - 400px);
     z-index: ${props => props.zIdx};
 `;
@@ -53,7 +53,7 @@ class Dolphin extends Component {
     render() {
         return (
             <StyledDolphin>
-                <StyledDolphinCore>
+                <StyledDolphinCore xl={this.props.xl===0 ? 100 : 100-this.props.xl*600}>
                     <img src={dolphin_core} alt={"dolphin"} style={ImgStyle}/>
                 </StyledDolphinCore>
                 <DolphinLineA x={this.props.x}/>

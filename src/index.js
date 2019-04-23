@@ -18,11 +18,6 @@ const StyledIndex = styled.div`
     font-family: "Courier New", Courier, monospace;
 `;
 
-// const StylBotFiller = styled.div`
-//     height: 1000px;
-//     width: 800;
-// `;
-
 const StylDivider = styled.div`
     width: 800px;
     height: 200px;
@@ -163,34 +158,26 @@ class Index extends React.Component {
         const isMobile = this.state.width <= 1000;
 
         const DolphinX = this.calcIntervalX(0, 1000);
+        const DolphinLeave = this.calcIntervalX(1000, 1600);
         const ProjDividerX = this.calcIntervalX(1200, 1500);
         const TechDividerX = this.calcIntervalX(2500, 3000);
 
-        if (isMobile) {
-            return (
-                <div>
-                    <h2>Uh oh...</h2>
-                    <p>Mobile version is currently under development.</p>
-                    <p>View on a computer or come back later.</p>
-                </div>
-            )
-        } else {
-            return (
-                <StyledIndex>
-                    <Dolphin x={DolphinX}/>
-                    <Heya />
-                    <Divider title={"Projects"} x={ProjDividerX}/>
-                    <ProjectSecrets fps={50} duration={0.4}/>
-                    <ProjectIMEDB fps={50} duration={0.6}/>
-                    <ProjectJzqiu fps={50} duration={0.4}/>
-                    {/*<Divider title={"Words"} x={WordDividerX}/>*/}
-                    {/*<Words />*/}
-                    <Divider title={"Tech Stack"} x={TechDividerX}/>
-                    <Techs />
-                    <Footer/>
-                </StyledIndex>
-            )
-        }
+
+        return (
+            <StyledIndex>
+                <Dolphin x={DolphinX} xl={DolphinLeave}/>
+                <Heya />
+                <Divider title={"Projects"} x={ProjDividerX}/>
+                <ProjectSecrets fps={50} duration={0.4}/>
+                <ProjectIMEDB fps={50} duration={0.6}/>
+                <ProjectJzqiu fps={50} duration={0.4}/>
+                {/*<Divider title={"Words"} x={WordDividerX}/>*/}
+                {/*<Words />*/}
+                <Divider title={"Tech Stack"} x={TechDividerX}/>
+                <Techs />
+                <Footer/>
+            </StyledIndex>
+        )
     }
 }
 
