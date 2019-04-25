@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 
 const StyledDolphin = styled.div`
-    height: 1500px;
+    height: ${props => props.w*0.6+1000}px;
     width: 100%;
 `;
 
@@ -54,9 +54,11 @@ class Dolphin extends Component {
         // dolphinWidth: 100% screen size, max 800
         const dolphinWidth = this.props.screenWidth > 1000 ? 800 : this.props.screenWidth;
         // dolphinTop: scale with width when scrolling, decrease to -600 (hide) when scroll completes
-        const dolphinTop = this.props.xl===0 ? 0.125*dolphinWidth : 0.125*dolphinWidth-this.props.xl*600;
+        const dolphinTop = this.props.xl===0 ?
+            0.125*dolphinWidth :
+            0.125*dolphinWidth-this.props.xl*0.7*dolphinWidth;
         return (
-            <StyledDolphin>
+            <StyledDolphin w={dolphinWidth}>
                 <StyledDolphinCore top={dolphinTop}
                                    w={dolphinWidth*0.625}>
                     <img src={dolphin_core} alt={"dolphin"} style={ImgStyle}/>

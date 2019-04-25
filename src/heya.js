@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import styled from 'styled-components'
 
 const StyledHeya = styled.div`
-    width: 800px;
-    height: 200px;
+    width: ${props => props.screenWidth*0.8}px;
+    height: ${props => props.screenWidth*0.1}px;
     position: relative;
-    left: calc(50% - 400px);
+    left: calc(50% - ${props => props.screenWidth*0.4}px);
 `;
 
 class Heya extends Component {
     render() {
         return (
-            <StyledHeya>
+            <StyledHeya screenWidth={this.props.screenWidth}>
                 <h1>Heya.</h1>
                 <p>This is Zhenfeng Qiu. You can also call me Jeff.</p>
                 <p>I am a college student studying Computer Science and Economics.</p>

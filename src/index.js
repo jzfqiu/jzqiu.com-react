@@ -155,18 +155,17 @@ class Index extends React.Component {
 
 
     render () {
-        // const isMobile = this.state.width <= 1000;
-
+        const DolphinDimTo = this.state.width > 1000 ? 1500 : 1000+0.75*this.state.width;
         const DolphinX = this.calcIntervalX(0, 1000);
-        const DolphinLeave = this.calcIntervalX(1000, 1600);
+        const DolphinTop = this.calcIntervalX(1000, DolphinDimTo);
         const ProjDividerX = this.calcIntervalX(1200, 1500);
         const TechDividerX = this.calcIntervalX(2500, 3000);
 
 
         return (
             <StyledIndex>
-                <Dolphin x={DolphinX} xl={DolphinLeave} screenWidth={this.state.width}/>
-                <Heya />
+                <Dolphin x={DolphinX} xl={DolphinTop} screenWidth={this.state.width}/>
+                <Heya screenWidth={this.state.width}/>
                 <Divider title={"Projects"} x={ProjDividerX}/>
                 <ProjectSecrets fps={50} duration={0.4} screenWidth={this.state.width}/>
                 <ProjectIMEDB fps={50} duration={0.6} screenWidth={this.state.width}/>
