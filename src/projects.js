@@ -3,24 +3,24 @@ import styled from 'styled-components'
 
 
 const StylProject = styled.div`
-    width: 1000px;
-    height: 300px;
-    margin-top: 50px;
+    width: ${props => props.projectWidth}px;
+    margin-top: ${props => props.projectWidth*0.2}px;
     margin-bottom: 50px;
     position: relative
-    left: calc(50% - 500px);
+    left: calc(50% - ${props => props.projectWidth/2}px);
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
 `;
 
 const StylProjSVG = styled.div`    
-    width: 500px;
+    width: ${props => props.componentWidth}px;
 `;
 
 const StylProjText = styled.div`
-    width: 500px;
-    padding: 50px;
+    width: ${props => props.componentWidth}px;
+    padding: ${props => props.componentWidth*0.1}px;
 `;
 
 const StyleProjLink = styled.a`
@@ -42,6 +42,11 @@ class ProjectComponent extends Component {
             frame: 0,
             playing: "none",
             intervalID: null,
+
+            // width of each project container
+            projectWidth : this.props.screenWidth>1000 ? 1000 : this.props.screenWidth*0.9,
+            // if large screen, fit both component in one row, else two rows
+            componentWidth : this.props.screenWidth>1000 ? 500 : this.props.screenWidth*0.9
         };
     }
 
@@ -117,8 +122,8 @@ class ProjectSecrets extends ProjectComponent {
         return (
             <StylProject onMouseEnter={() => {this.playEnterFrame()}}
                          onMouseLeave={() => {this.playLeaveFrame()}}
-            >
-                <StylProjSVG>
+                         projectWidth={this.state.projectWidth}>
+                <StylProjSVG componentWidth={this.state.componentWidth}>
                     <svg xmlns="http://www.w3.org/2000/svg"
                          viewBox="-5 -5 810 410">
                         <style>{`
@@ -171,7 +176,7 @@ c2,0,3.7,1.8,3.7,4v12.5C189.2,381,187.6,382.8,185.6,382.8z"/>
                         <line className="st0" x1="30" y1="300" x2={x * 180 + 30} y2="300"/>
                     </svg>
                 </StylProjSVG>
-                <StylProjText>
+                <StylProjText componentWidth={this.state.componentWidth*0.8}>
                     <StyleProjLink href={"https://github.com/jeff-zqiu/uocsecrets"}>
                         <h4>UoCSecrets</h4>
                     </StyleProjLink>
@@ -188,58 +193,113 @@ c2,0,3.7,1.8,3.7,4v12.5C189.2,381,187.6,382.8,185.6,382.8z"/>
 }
 
 
+
 class ProjectIMEDB extends ProjectComponent {
 
     render() {
         const x1 = this.state.frame < 0.5 ? this.state.frame * 2 : 1;
         const x2 = this.state.frame < 0.5 ? 0 : this.state.frame * 2 - 1;
-        return (
-            <StylProject onMouseEnter={() => {this.playEnterFrame()}}
-                         onMouseLeave={() => {this.playLeaveFrame()}}
-            >
-                <StylProjText>
-                    <StyleProjLink href={"https://github.com/jeff-zqiu/IME-Inventory-Database"}>
-                        <h4>IME Inventory Database</h4>
-                    </StyleProjLink>
-                    <p>
-                        A search engine and database interface for IME's equipment inventory.
-                        Uses metatags and text index to build intelligent search query. Interface for editing
-                        also included. Currently under development.
-                    </p>
-                    <p>Tech: Flask, jQuery, MongoDB</p>
-                </StylProjText>
-                <StylProjSVG>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 810 410">
-                        <style>
-                            {`
+        // TODO: recycle svg and text component
+        if (this.state.projectWidth<1000) {
+            return (
+                <StylProject onMouseEnter={() => {this.playEnterFrame()}}
+                             onMouseLeave={() => {this.playLeaveFrame()}}
+                             projectWidth={this.state.projectWidth}
+                >
+                    <StylProjSVG componentWidth={this.state.componentWidth}>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 810 410">
+                            <style>
+                                {`
                                     .st0{fill:#FFFFFF;stroke:#000000;stroke-width:2;stroke-miterlimit:10;}
                                     .st1{fill:#FFFFFF;stroke:#000000;stroke-width:2;stroke-miterlimit:10;}
                                 `}
-                        </style>
-                        <line className="st1" x1="0" y1="0" x2="800" y2="0"/>
-                        <line className="st1" x1="0" y1="0" x2="0" y2="400"/>
-                        <line className="st1" x1="800" y1="0" x2="800" y2="400"/>
-                        <line className="st1" x1="0" y1="400" x2="800" y2="400"/>
+                            </style>
+                            <line className="st1" x1="0" y1="0" x2="800" y2="0"/>
+                            <line className="st1" x1="0" y1="0" x2="0" y2="400"/>
+                            <line className="st1" x1="800" y1="0" x2="800" y2="400"/>
+                            <line className="st1" x1="0" y1="400" x2="800" y2="400"/>
 
-                        <rect x={150} y={175 - x1 * 15} className="st1" width={500 + x1 * 100} height={50 + x1 * 130}/>
-                        <rect x={350 - x1 * 165} y={275 - x1 * 90} className="st1" width={100 + x1 * 30}
-                              height={50 + x1 * 80}/>
+                            <rect x={150} y={175 - x1 * 15} className="st1" width={500 + x1 * 100} height={50 + x1 * 130}/>
+                            <rect x={350 - x1 * 165} y={275 - x1 * 90} className="st1" width={100 + x1 * 30}
+                                  height={50 + x1 * 80}/>
 
-                        <line className="st1" x1="345" y1="200" x2={345 + x2 * 350} y2="200"/>
-                        <line className="st1" x1="345" y1="250" x2={345 + x2 * 350} y2="250"/>
-                        <line className="st1" x1="345" y1="300" x2={345 + x2 * 200} y2="300"/>
+                            <line className="st1" x1="345" y1="200" x2={345 + x2 * 350} y2="200"/>
+                            <line className="st1" x1="345" y1="250" x2={345 + x2 * 350} y2="250"/>
+                            <line className="st1" x1="345" y1="300" x2={345 + x2 * 200} y2="300"/>
 
-                        <polyline className="st0" points="0,130.7 108.5,130.7 174.5,68.6 800,68.6 "/>
-                        <polygon className="st1"
-                                 points="60.1,19.8 47.2,43.4 60.1,66.6 85.4,66.6 98.2,43.2 85.6,19.8 "/>
-                        <polygon className="st1"
-                                 points="61.7,43.2 74.7,66.6 61.7,89.4 36,89.4 22.9,66.6 35.9,43.2 "/>
-                        <polygon className="st1"
-                                 points="60.1,66.6 54.3,76.7 67.4,98.5 92.4,98.5 104.9,76.5 92.6,53.5 67.4,53.5 "/>
-                    </svg>
-                </StylProjSVG>
-            </StylProject>
-        )
+                            <polyline className="st0" points="0,130.7 108.5,130.7 174.5,68.6 800,68.6 "/>
+                            <polygon className="st1"
+                                     points="60.1,19.8 47.2,43.4 60.1,66.6 85.4,66.6 98.2,43.2 85.6,19.8 "/>
+                            <polygon className="st1"
+                                     points="61.7,43.2 74.7,66.6 61.7,89.4 36,89.4 22.9,66.6 35.9,43.2 "/>
+                            <polygon className="st1"
+                                     points="60.1,66.6 54.3,76.7 67.4,98.5 92.4,98.5 104.9,76.5 92.6,53.5 67.4,53.5 "/>
+                        </svg>
+                    </StylProjSVG>
+                    <StylProjText componentWidth={this.state.componentWidth*0.8}>
+                        <StyleProjLink href={"https://github.com/jeff-zqiu/IME-Inventory-Database"}>
+                            <h4>IME Inventory Database</h4>
+                        </StyleProjLink>
+                        <p>
+                            A search engine and database interface for IME's equipment inventory.
+                            Uses metatags and text index to build intelligent search query. Interface for editing
+                            also included. Currently under development.
+                        </p>
+                        <p>Tech: Flask, jQuery, MongoDB</p>
+                    </StylProjText>
+                </StylProject>
+            )
+        } else {
+            return (
+                <StylProject onMouseEnter={() => {this.playEnterFrame()}}
+                             onMouseLeave={() => {this.playLeaveFrame()}}
+                             projectWidth={this.state.projectWidth}
+                >
+
+                    <StylProjText componentWidth={this.state.componentWidth*0.8}>
+                        <StyleProjLink href={"https://github.com/jeff-zqiu/IME-Inventory-Database"}>
+                            <h4>IME Inventory Database</h4>
+                        </StyleProjLink>
+                        <p>
+                            A search engine and database interface for IME's equipment inventory.
+                            Uses metatags and text index to build intelligent search query. Interface for editing
+                            also included. Currently under development.
+                        </p>
+                        <p>Tech: Flask, jQuery, MongoDB</p>
+                    </StylProjText>
+                    <StylProjSVG componentWidth={this.state.componentWidth}>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 810 410">
+                            <style>
+                                {`
+                                    .st0{fill:#FFFFFF;stroke:#000000;stroke-width:2;stroke-miterlimit:10;}
+                                    .st1{fill:#FFFFFF;stroke:#000000;stroke-width:2;stroke-miterlimit:10;}
+                                `}
+                            </style>
+                            <line className="st1" x1="0" y1="0" x2="800" y2="0"/>
+                            <line className="st1" x1="0" y1="0" x2="0" y2="400"/>
+                            <line className="st1" x1="800" y1="0" x2="800" y2="400"/>
+                            <line className="st1" x1="0" y1="400" x2="800" y2="400"/>
+
+                            <rect x={150} y={175 - x1 * 15} className="st1" width={500 + x1 * 100} height={50 + x1 * 130}/>
+                            <rect x={350 - x1 * 165} y={275 - x1 * 90} className="st1" width={100 + x1 * 30}
+                                  height={50 + x1 * 80}/>
+
+                            <line className="st1" x1="345" y1="200" x2={345 + x2 * 350} y2="200"/>
+                            <line className="st1" x1="345" y1="250" x2={345 + x2 * 350} y2="250"/>
+                            <line className="st1" x1="345" y1="300" x2={345 + x2 * 200} y2="300"/>
+
+                            <polyline className="st0" points="0,130.7 108.5,130.7 174.5,68.6 800,68.6 "/>
+                            <polygon className="st1"
+                                     points="60.1,19.8 47.2,43.4 60.1,66.6 85.4,66.6 98.2,43.2 85.6,19.8 "/>
+                            <polygon className="st1"
+                                     points="61.7,43.2 74.7,66.6 61.7,89.4 36,89.4 22.9,66.6 35.9,43.2 "/>
+                            <polygon className="st1"
+                                     points="60.1,66.6 54.3,76.7 67.4,98.5 92.4,98.5 104.9,76.5 92.6,53.5 67.4,53.5 "/>
+                        </svg>
+                    </StylProjSVG>
+                </StylProject>
+            )
+        }
     }
 }
 
@@ -249,8 +309,10 @@ class ProjectJzqiu extends ProjectComponent {
         const x = this.state.frame;
         return (
             <StylProject onMouseEnter={() => {this.playEnterFrame()}}
-                         onMouseLeave={() => {this.playLeaveFrame()}}>
-                <StylProjSVG>
+                         onMouseLeave={() => {this.playLeaveFrame()}}
+                         projectWidth={this.state.projectWidth}
+            >
+                <StylProjSVG componentWidth={this.state.componentWidth}>
                     <svg xmlns="http://www.w3.org/2000/svg"
                          viewBox="-5 -5 810 410">
                         <style>{`
@@ -305,7 +367,7 @@ class ProjectJzqiu extends ProjectComponent {
                         <line className="st3" x1={610+x*35} y1={200-120*x} x2={610-x*35} y2={200+120*x}/>
                     </svg>
                 </StylProjSVG>
-                <StylProjText>
+                <StylProjText componentWidth={this.state.componentWidth*0.8}>
                     <h4>jzqiu.com</h4>
                     <p>
                         My personal website. Built with vector graphs, svg animation and excessive

@@ -168,9 +168,9 @@ class Index extends React.Component {
                 <Dolphin x={DolphinX} xl={DolphinLeave} screenWidth={this.state.width}/>
                 <Heya />
                 <Divider title={"Projects"} x={ProjDividerX}/>
-                <ProjectSecrets fps={50} duration={0.4}/>
-                <ProjectIMEDB fps={50} duration={0.6}/>
-                <ProjectJzqiu fps={50} duration={0.4}/>
+                <ProjectSecrets fps={50} duration={0.4} screenWidth={this.state.width}/>
+                <ProjectIMEDB fps={50} duration={0.6} screenWidth={this.state.width}/>
+                <ProjectJzqiu fps={50} duration={0.4} screenWidth={this.state.width}/>
                 <Divider title={"Tech Stack"} x={TechDividerX}/>
                 <Techs />
                 <Footer/>
