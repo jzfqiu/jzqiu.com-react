@@ -38,16 +38,17 @@ const StylDividerTitle = styled.h2`
 
 class Divider extends React.Component {
     render() {
+        const dividerWidth = this.props.dividerWidth;
         return (
             <StylDivider>
-                <svg height={30} width={200}>
+                <svg height={30} width={dividerWidth}>
                     <style>{`.cls{stroke:#000000;stroke-width:2}`}</style>
-                    <line className="cls" x1={200-this.props.x*200} y1="13" x2="200" y2="13"/>
+                    <line className="cls" x1={dividerWidth-this.props.x*dividerWidth} y1="13" x2={dividerWidth} y2="13"/>
                 </svg>
                 <StylDividerTitle>{this.props.title}</StylDividerTitle>
-                <svg height={30} width={200}>
+                <svg height={30} width={dividerWidth}>
                     <style>{`.cls{stroke:#000000;stroke-width:2}`}</style>
-                    <line className="cls" x1="0" y1="13" x2={this.props.x*200} y2="13"/>
+                    <line className="cls" x1="0" y1="13" x2={this.props.x*dividerWidth} y2="13"/>
                 </svg>
             </StylDivider>
         )
@@ -160,19 +161,20 @@ class Index extends React.Component {
         const DolphinTop = this.calcIntervalX(1000, DolphinDimTo);
         const ProjDividerX = this.calcIntervalX(1200, 1500);
         const TechDividerX = this.calcIntervalX(2500, 3000);
+        const DividerWidth = this.state.width > 1000 ? 200 : 0.2*this.state.width;
 
 
         return (
             <StyledIndex>
                 <Dolphin x={DolphinX} xl={DolphinTop} screenWidth={this.state.width}/>
                 <Heya screenWidth={this.state.width}/>
-                <Divider title={"Projects"} x={ProjDividerX}/>
+                <Divider title={"Projects"} dividerWidth={DividerWidth} x={ProjDividerX}/>
                 <ProjectSecrets fps={50} duration={0.4} screenWidth={this.state.width}/>
                 <ProjectIMEDB fps={50} duration={0.6} screenWidth={this.state.width}/>
                 <ProjectJzqiu fps={50} duration={0.4} screenWidth={this.state.width}/>
-                <Divider title={"Tech Stack"} x={TechDividerX}/>
-                <Techs />
-                <Footer/>
+                <Divider title={"Tech Stack"} dividerWidth={DividerWidth} x={TechDividerX}/>
+                <Techs screenWidth={this.state.width}/>
+                <Footer screenWidth={this.state.width}/>
             </StyledIndex>
         )
     }

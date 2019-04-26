@@ -45,14 +45,15 @@ class TechCategory extends Component {
 
 
 const StylTechContainer = styled.div`
-    width: 480px;
+    width: ${props => props.techWidth}px;
     display: flex;
     align-items: center;
     margin-right: 20px;
+    flex-wrap: wrap;
 `;
 
 const StylTechText = styled.div`
-    width: 380px;
+    width: 320px;
     padding: 20px;
 `;
 
@@ -71,8 +72,9 @@ const StylTechLogo = styled.img`
 
 class Tech extends Component {
     render() {
+        const techWidth = this.props.screenWidth>1000 ? 480 : this.props.screenWidth * 0.8;
         return (
-            <StylTechContainer>
+            <StylTechContainer techWidth={techWidth}>
                 <StylTechLogoContainer> <StylTechLogo src={this.props.logo} alt={"tech Logo"} /></StylTechLogoContainer>
                 <StylTechText>
                     <h4>{this.props.name}</h4>
@@ -125,9 +127,9 @@ class TechCard extends Component {
 
 
 const StylTechs = styled.div`
-    width: 1000px;
+    width: ${props => props.techsWidth}px;
     position: relative;
-    left: calc(50% - 500px);
+    left: calc(50% - ${props => props.techsWidth*0.5}px);
     display: flex;
     align-content: baseline;
     flex-wrap: wrap;
@@ -135,8 +137,9 @@ const StylTechs = styled.div`
 
 class Techs extends Component {
     render() {
+        const techsWidth = this.props.screenWidth>1000 ? 1000 : this.props.screenWidth * 0.8;
         return (
-            <StylTechs>
+            <StylTechs techsWidth={techsWidth}>
                 <TechCategory category={"Backend"}/>
                 <Tech name={"Flask"}
                       logo={flask_logo}
