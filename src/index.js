@@ -160,7 +160,7 @@ class Index extends React.Component {
         const DolphinX = this.calcIntervalX(0, 1000);
         const DolphinTop = this.calcIntervalX(1000, DolphinDimTo);
         const ProjDividerX = this.calcIntervalX(1200, 1500);
-        const TechDividerX = this.calcIntervalX(2500, 3000);
+        const TechDividerX = this.calcIntervalX(3000, 3300);
         const DividerWidth = this.state.width > 1000 ? 200 : 0.2*this.state.width;
 
 
