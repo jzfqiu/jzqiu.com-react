@@ -86,7 +86,7 @@ class Footer extends React.Component {
         return (
             <StylButtonsContainer>
                 <StylButtonImgContainer>
-                    <a href="https://github.com/jeff-zqiu">
+                    <a href="https://github.com/endo1phin">
                         <StylButtonImg src={github_button} alt={"github button"}/>
                     </a>
                 </StylButtonImgContainer>
@@ -96,15 +96,10 @@ class Footer extends React.Component {
                     </a>
                 </StylButtonImgContainer>
                 <StylButtonImgContainer>
-                    <a href="https://twitter.com/jzqiu1">
+                    <a href="https://twitter.com/endo1phin">
                         <StylButtonImg src={twitter_button} alt={"twitter button"}/>
                     </a>
                 </StylButtonImgContainer>
-                {/*<StylButtonImgContainer>*/}
-                {/*    <a href="https://github.com/jeff-zqiu/CV/raw/master/Jeff_Qiu_Technical_CV.pdf">*/}
-                {/*        <StylButtonImg src={cv_button} alt={"CV button"}/>*/}
-                {/*    </a>*/}
-                {/*</StylButtonImgContainer>*/}
             </StylButtonsContainer>
         )
     }

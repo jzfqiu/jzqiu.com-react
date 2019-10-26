@@ -17,7 +17,6 @@ class Heya extends Component {
                 <p>This is Zhenfeng Qiu. You can also call me Jeff.</p>
                 <p>I am a college student studying Computer Science and Economics.</p>
                 <p>I like to build stuff and learn a bit of everything.</p>
-                <p>Dolphin is my spirit animal.</p>
             </StyledHeya>
         );
     }
